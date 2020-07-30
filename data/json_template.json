@@ -19,7 +19,7 @@
       "accountType": "SenderBankkontoTypbezeichnung1",
       "bankName": "SenderBankName1",
       "iban": "DE12345678910111213141",
-      "bic": "BICBICA1BIC",
+      "bic": "BICBICA1BIC"
     },
     {
       "createdDate": "2020-01-13T08:18:58.680+0000",
@@ -40,7 +40,7 @@
       "accountType": "SenderBankkontoTypbezeichnung2",
       "bankName": "SenderBankName2",
       "iban": "DE23456789101112131415",
-      "bic": "BICBICA2BIC",
+      "bic": "BICBICA2BIC"
     },
     {
       "createdDate": "2020-01-27T08:18:58.680+0000",
@@ -61,7 +61,7 @@
       "accountType": "SenderBankkontoTypbezeichnung3",
       "bankName": "SenderBankName3",
       "iban": "DE34567891011121314151",
-      "bic": "BICBICA3BIC",
+      "bic": "BICBICA3BIC"
     }
   ]
 }
