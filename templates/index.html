@@ -8,7 +8,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/money_small.png') }}">
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap.min.css') }}" /> 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=23" />
     
     <!--catch vars passed to render_template and make available for js -->
@@ -16,10 +16,14 @@
     <title>Geldwäsche Erkennungstool</title>
 </head>
 
-<body class="table">
-    <button type="button" class="btn btn-primary" id="goBtn">GO</button>
+<body>
+  <div id="Input">
+        <label>Please enter the JSON file:</label>
+        <input type="file">
+        <button type="button" class="btn btn-primary" id="goBtn">GO</button>
+  </div>
 
-    <table id="resultTable" class="table table-sm .tableFixHead">
+    <table id="resultTable" class="table table-sm .tableFixHead ">
         <thead>
           <tr>
             <th scope="col">#</th>

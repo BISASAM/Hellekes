@@ -11,7 +11,7 @@ def root():
 @app.route('/get_data')
 def read_json():
 
-    with open('data\json_template_improved.json') as f:
+    with open('data/json_template_improved.json') as f:
         data = json.load(f)
         entry_list = data["transfers"]
     return jsonify(entry_list)
