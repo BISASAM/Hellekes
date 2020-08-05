@@ -8,11 +8,22 @@
 .tableFixHead thead th { position: sticky; top: 0; }
 
 /* Just common table stuff. Really. */
-table  { border-collapse: collapse; width: 100%; }
-th, td { padding: 8px 16px; }
-th     { background:#eee; }
+table  { border-collapse: collapse; width: 100%;}
+th, td { padding: 8px 16px; margin: 3px; }
+th     { background:#eee;}
+tr {text-align: center;}
 
-/* Borders (if you need them) 
+#Input {padding: 10px;
+        font-weight: bold;
+      }
+#Input label {display: block;}
+#Input #fileSelection {padding: 10px 0px;}
+
+.hidden {
+  display: none;
+}
+
+/* Borders (if you need them)  
 .tableFixHead,
 .tableFixHead td {
   box-shadow: inset 1px -1px #000;
