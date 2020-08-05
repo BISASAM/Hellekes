@@ -1,0 +1,23 @@
+.table td {
+    vertical-align: middle !important;
+}
+
+
+/* Fixed table header when scrolling*/  
+.tableFixHead          { overflow-y: auto; height: 100px; }
+.tableFixHead thead th { position: sticky; top: 0; }
+
+/* Just common table stuff. Really. */
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th     { background:#eee; }
+
+/* Borders (if you need them) 
+.tableFixHead,
+.tableFixHead td {
+  box-shadow: inset 1px -1px #000;
+}
+.tableFixHead th {
+  box-shadow: inset 1px 1px #000, 0 1px #000;
+}
+*/

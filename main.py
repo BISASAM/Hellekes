@@ -1,36 +1,21 @@
+from flask import Flask, render_template, jsonify
 import json
-from flask import Flask, render_template_string
 app = Flask(__name__)
 
+
 @app.route('/')
-def hello_world():
-    with open('data\json_template.json') as json_file:
-        data = json.load(json_file)
-    for key in data:
-        print(key)
-        entry_list = data[key]
-    return render_template_string('''
-
-    {% for entry in entry_list %}
-        <table>
-                <tr>
-                    <td> Feld Name </td> 
-                    <td> Wert </td>
-                </tr>
+def root():
+    return render_template("index.html")
 
 
-        {% for name, value in entry.items() %}
+@app.route('/get_data')
+def read_json():
 
-                <tr>
-                    <td>{{ name }}</td> 
-                    <td>{{ value }}</td>
-                </tr>
+    with open('data\json_template_improved.json') as f:
+        data = json.load(f)
+        entry_list = data["transfers"]
+    return jsonify(entry_list)
 
-        {% endfor %}
-        </table>
-        <p>
-    {% endfor %}
-''', entry_list=entry_list)
 
 
 if __name__ == '__main__':
