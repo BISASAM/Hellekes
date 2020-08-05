@@ -1,5 +1,5 @@
 const goBtn = document.getElementById("goBtn");
-const dataTable = document.getElementById("dataTable");
+const resultTable = document.getElementById("resultTable");
 
 
 document.onload = initialze();
@@ -17,8 +17,7 @@ async function on_go_btn() {
     else {
         data = await response.json();
         fill_table(data);
-        var tableDiv = document.getElementById("table");
-        tableDiv.classList.remove("hidden");
+        resultTable.classList.remove("hidden");
     }
 }
 

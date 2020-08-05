@@ -17,43 +17,56 @@
 </head>
 
 <body>
-  <div id="Input">
+
+  <div id="white-content-wrapper" class="container">
+
+
+  
+  <div id="input_div">
         <label>Please enter the JSON file:</label>
         <div id="fileSelection">
         <input type="file">
         <button type="button" class="btn btn-primary" id="goBtn">GO</button>
         </div>
   </div>
-  <div id="table" class="hidden">
-    <table id="resultTable" class="table table-sm .tableFixHead ">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">createdDate</th>
-            <th scope="col">lastModifiedDate</th>
-            <th scope="col">lockVersion</th>
-            <th scope="col">organizationId</th>
-            <th scope="col">bankTransferReportItemId</th>
-            <th scope="col">bankTransferId</th>
-            <th>${entry.financialAccountId}</th>
-            <th scope="col">amount</th>
-            <th scope="col">bankTransferDate</th>
-            <th scope="col">recipientIban</th>
-            <th scope="col">recipientBic</th>
-            <th scope="col">recipientName</th>
-            <th scope="col">purpose</th>
-            <th scope="col">accountHolder</th>
-            <th scope="col">accountSystem</th>
-            <th scope="col">accountType</th>
-            <th scope="col">bankName</th>
-            <th scope="col">iban</th>
-            <th scope="col">bic</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
 
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table id="resultTable" class="table table-sm table-hover table-striped hidden">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">createdDate</th>
+                <th scope="col">lastModifiedDate</th>
+                <th scope="col">lockVersion</th>
+                <th scope="col">organizationId</th>
+                <th scope="col">bankTransferReportItemId</th>
+                <th scope="col">bankTransferId</th>
+                <th>${entry.financialAccountId}</th>
+                <th scope="col">amount</th>
+                <th scope="col">bankTransferDate</th>
+                <th scope="col">recipientIban</th>
+                <th scope="col">recipientBic</th>
+                <th scope="col">recipientName</th>
+                <th scope="col">purpose</th>
+                <th scope="col">accountHolder</th>
+                <th scope="col">accountSystem</th>
+                <th scope="col">accountType</th>
+                <th scope="col">bankName</th>
+                <th scope="col">iban</th>
+                <th scope="col">bic</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+      </div>
+    </div>
+  
+  </div>
+
+
+  </div>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

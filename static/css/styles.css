@@ -1,5 +1,22 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: rgb(186, 186, 186);
+}
+
+#white-content-wrapper {
+  background-color: rgba(255, 255, 255);
+  max-width: 1440px;
+  min-height: 100%;
+  text-align: center;
+}
+
+
 .table td {
     vertical-align: middle !important;
+    font-size: 0.95rem;
 }
 
 
@@ -13,11 +30,11 @@ th, td { padding: 8px 16px; margin: 3px; }
 th     { background:#eee;}
 tr {text-align: center;}
 
-#Input {padding: 10px;
+#input_div {padding: 10px;
         font-weight: bold;
       }
-#Input label {display: block;}
-#Input #fileSelection {padding: 10px 0px;}
+#input_div label {display: block;}
+#input_div #fileSelection {padding: 10px 0px;}
 
 .hidden {
   display: none;
