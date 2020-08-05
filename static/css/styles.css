@@ -20,6 +20,10 @@ tr {text-align: center;}
 #Input label {display: block;}
 #Input fileSelection {margin: 8 px;}
 
+.hidden {
+  display: none;
+}
+
 /* Borders (if you need them)  
 .tableFixHead,
 .tableFixHead td {

@@ -17,6 +17,8 @@ async function on_go_btn() {
     else {
         data = await response.json();
         fill_table(data);
+        var tableDiv = document.getElementById("table");
+        tableDiv.classList.remove("hidden");
     }
 }
 
