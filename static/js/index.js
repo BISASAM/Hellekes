@@ -22,6 +22,7 @@ async function on_go_btn() {
 }
 
 function fill_table(data) {
+    tableBody.innerHTML = "";  // clear table
     i = 1;
     for (const entry of data) {
         let row = document.createElement('tr');
