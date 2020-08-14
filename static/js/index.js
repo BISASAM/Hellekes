@@ -1,5 +1,7 @@
 const goBtn = document.getElementById("goBtn");
 const resultTable = document.getElementById("resultTable");
+const fileInput = document.getElementById("fileInput");
+var jsonData;
 
 
 document.onload = initialze();
@@ -10,15 +12,15 @@ function initialze() {
 
 
 async function on_go_btn() {
-    const response = await fetch("/get_data");
-    if (response.status !== 200) {
-        console.log('Problem with api: ' + response.status);
-    }
-    else {
-        data = await response.json();
-        fill_table(data);
+    let file = fileInput.files[0];
+    let reader = new FileReader();
+    reader.onload = function(){
+        let dataURL = reader.result;
+        jsonData = JSON.parse(dataURL).transfers;
+        fill_table(jsonData);
         resultTable.classList.remove("hidden");
-    }
+    };
+    reader.readAsText(file);
 }
 
 function fill_table(data) {
