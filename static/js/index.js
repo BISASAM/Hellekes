@@ -1,6 +1,7 @@
 const goBtn = document.getElementById("goBtn");
 const resultTable = document.getElementById("resultTable");
 const fileInput = document.getElementById("fileInput");
+var jsonData;
 
 
 document.onload = initialze();
@@ -11,12 +12,12 @@ function initialze() {
 
 
 async function on_go_btn() {
-    var file = fileInput.files[0];
-    var reader = new FileReader();
+    let file = fileInput.files[0];
+    let reader = new FileReader();
     reader.onload = function(){
-        var dataURL = reader.result;
-        let jsonData = JSON.parse(dataURL);
-        fill_table(jsonData.transfers);
+        let dataURL = reader.result;
+        jsonData = JSON.parse(dataURL).transfers;
+        fill_table(jsonData);
         resultTable.classList.remove("hidden");
     };
     reader.readAsText(file);
