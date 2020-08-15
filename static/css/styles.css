@@ -14,33 +14,25 @@ body {
 }
 
 #Filterbox {
-  margin-bottom: 2rem;
+  border-style: double;
+  margin-bottom: 0rem;
+  background-color: antiquewhite;
+  padding: 2rem;
 }
 
 #Resultbox {
-  margin-top: 2rem;
+  padding: 2rem 0rem;
+  background-color: #f8f9fa;
 }
 
 
 .table td {
-    vertical-align: middle !important;
-    font-size: 0.95rem;
+  vertical-align: middle !important;
+  font-size: 0.95rem;
 }
 
-div.col_select {
-  border-style: solid;
-  border-width: thin;
-  border-radius: 0.4rem;
-  margin: .5rem;
-  padding: .25rem;
-}
-
-label.col_select {
-  margin: 0;
-}
-
-input.col_select {
-  margin-right: 0.4rem;
+#col_select {
+  margin: 1rem;
 }
 
 button.col_select {
@@ -48,6 +40,10 @@ button.col_select {
   border-width: thin;
   border-radius: 0.3rem;
   margin: 0.3rem;
+  outline: none;
+}
+
+summary {
   outline: none;
 }
 

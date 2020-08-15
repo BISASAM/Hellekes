@@ -1,88 +1,96 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    
-    <link rel="shortcut icon" type="image/x-icon" href="../static/images/money_small.png">
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../static/lib_fw/bootstrap.min.css" /> 
-    <link rel="stylesheet" href="../static/css/styles.css" />
-    
-    <!--catch vars passed to render_template and make available for js -->
-    
-    <title>Geldwäsche Erkennungstool</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="../static/images/money_small.png">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../static/lib_fw/bootstrap.min.css" />
+  <link rel="stylesheet" href="../static/css/styles.css" />
+
+  <!--catch vars passed to render_template and make available for js -->
+
+  <title>Geldwäsche Erkennungstool</title>
 </head>
 
 <body>
 
   <div id="white-content-wrapper" class="container">
 
-  <div id="Filterbox" class="container">    
-  
-  <div id="input_div">
-        <label>Please enter the JSON file:</label>
-        <div id="fileSelection">
+    <div id="input_div" class="container">
+      <label>Please enter the JSON file:</label>
+      <div id="fileSelection">
         <input type="file" id="fileInput" name="fileInput" accept=".txt, .json">
         <button type="button" class="btn btn-primary" id="goBtn">GO</button>
-        </div>
-  </div>
-
-  <div>
-  <details>
-    <summary>
-      Smurphing <input type="checkbox" name="smurphing" value="bla"> 
-    </summary>
-    <label for="mBetrag">min. Betrag:</label>
-    <input type="text" id="mBetrag" name="mBetrag">
-
-    <label for="mAnzahl">min. Anzahl:</label>
-    <input type="text" id="mAnzahl" name="mAnzahl">
-
-    <label for="varianz">Varianz</label>
-    <input type="text" id="varianz" name="varianz">
-  </details>
-</div>
-
-  <div>
-  <details>
-    <summary>
-      Signalwörter <input type="checkbox" name="signalwoerter" value="bla"> 
-    </summary>
-    <br>
-    <button type="button">Liste der Signalwörter bearbeiten</button> 
-  </details>
-</div>
-
-  <div>
-  <details>
-    <summary>
-      Korruptionsindex <input type="checkbox" name="korruptionsindex" value="bla"> 
-    </summary>
-    <label for="mKorr">max. Korruptionsindex</label>
-    <input type="text" id="mKorr" name="mKorr"> <br><br>
-    <button type="button">Länderliste mit Korruptionsindex bearbeiten</button> 
-  </details>
-</div>
-</div>
-
-<div id="Resultbox" class="container">
-  <div class="row" id="col_select">
-    <!-- gets filled with selectable column names -->
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <div class="table-responsive">
-        <table id="resultTable" class="table table-sm table-hover table-striped hidden">
-        </table>
       </div>
     </div>
-  
-  </div>
-</div>
+
+    <div id="Filterbox" class="container">
+      <div>
+        <details>
+          <summary>
+            Smurphing <input type="checkbox" name="smurphing" value="bla">
+          </summary>
+          <div style="margin-left: 1.3rem;">
+            <label for="mBetrag">min. Betrag:</label>
+            <input type="text" id="mBetrag" name="mBetrag">
+
+            <label for="mAnzahl">min. Anzahl:</label>
+            <input type="text" id="mAnzahl" name="mAnzahl">
+
+            <label for="varianz">Varianz</label>
+            <input type="text" id="varianz" name="varianz">
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>
+            Signalwörter <input type="checkbox" name="signalwoerter" value="bla">
+          </summary>
+          <div style="margin-left: 1.3rem;">
+            <button type="button">Liste der Signalwörter bearbeiten</button>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>
+            Korruptionsindex <input type="checkbox" name="korruptionsindex" value="bla">
+          </summary>
+          <div style="margin-left: 1.3rem;">
+            <label for="mKorr">max. Korruptionsindex</label>
+            <input type="text" id="mKorr" name="mKorr"> <br><br>
+            <button type="button">Länderliste mit Korruptionsindex bearbeiten</button>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <hr>
+
+    <div id="Resultbox" class="container">
+      <div class="row" id="col_select">
+        <!-- gets filled with selectable column names -->
+      </div>
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table id="resultTable" class="table table-sm table-hover table-striped hidden">
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </div>
 
@@ -97,4 +105,5 @@
   <script src="../static/js/index.js"></script>
 
 </body>
+
 </html>
