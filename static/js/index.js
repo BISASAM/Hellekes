@@ -1,7 +1,7 @@
 const goBtn = document.getElementById("goBtn");
 const resultTable = document.getElementById("resultTable");
 const fileInput = document.getElementById("fileInput");
-const colSelect = document.getElementById("col_select");
+const colSelectDiv = document.getElementById("col_select");
 var jsonData;
 
 
@@ -71,28 +71,15 @@ function fill_col_select(header) {
     // This function creates the section above the results table, 
     // that contains all the togglable columns 
 
-    colSelect.innerHTML = "";  // clear first
+    colSelectDiv.innerHTML = "";  // clear first
     for (attr in header) {
-        let label = document.createElement("label");
-        let checkbox = document.createElement("input");
-        let div = document.createElement("div");
-        
-        div.classList.add("col_select");
-
-        label.for = attr;
-        label.innerHTML = attr;
-        label.classList.add("col_select");
-
-        checkbox.type = "checkbox";
-        checkbox.name = attr;
-        checkbox.checked = true;
-        checkbox.classList.add("col_select");
-        checkbox.addEventListener('change', toggleCol)
-
-        div.appendChild(checkbox);
-        div.appendChild(label);
-        colSelect.appendChild(div);
-        
+        let btn = document.createElement("button");
+        btn.type = "button";
+        btn.name = attr;
+        btn.innerHTML = attr;
+        btn.classList.add("col_select");
+        btn.addEventListener('click', toggleCol);
+        colSelectDiv.appendChild(btn);
     }
 };
 
@@ -100,6 +87,7 @@ function fill_col_select(header) {
 function toggleCol(event) {
     // hide/unhide column 
     console.log(event.target.name);
+    event.target.classList.toggle("pressed");
     let elements_to_hide = document.getElementsByClassName(event.target.name);
     for (const element of elements_to_hide) {
         element.classList.toggle("hidden");
