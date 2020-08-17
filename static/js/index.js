@@ -49,7 +49,7 @@ function fill_table(data) {
             td.classList.add(attr);  //needed to hide/unhide column
             td.innerHTML = transaction[attr];
             if (cells_to_mark.has(attr)) {
-                // attached class to row in order to mark it
+                // attach class to row in order to mark it
             } 
             row.appendChild(td);
         }
@@ -107,7 +107,7 @@ function toggleCol(event) {
 }
 
 function get_attr_to_mark(transaction) {
-    "This function takes a transaction as input, applies filter and returns a set, that defines which table cellls to mark"
+    "This function takes a transaction as input, applies filter and returns a set, that defines which table cells to mark"
     "output example: {iban, purpose, amount}"
 
     return new Set([]);
