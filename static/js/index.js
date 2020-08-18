@@ -11,6 +11,7 @@ var jsonData;
 
 const corruptionIndexList = new Set("Please fill");
 const signalWordList = new Set("Please fill");
+var smurfingRows = null;
 
 
 document.onload = initialze();
@@ -40,6 +41,10 @@ function fill_table(data) {
     // create table body
     let body = document.createElement('tbody');
     i = 1;
+    if(document.getElementById("smurphingCheck").checked)
+    {
+        smurfingRows = SmurfingAnalysis(data);
+    }
     for (const transaction of data) {
         let row = document.createElement('tr');
         row.innerHTML = `<th scope="row">${i++}</th>
@@ -53,6 +58,10 @@ function fill_table(data) {
             td.innerHTML = transaction[attr];
             if (cells_to_mark.has(attr)) {
                 // attach class to row in order to mark it
+            }
+            if(smurfingRows != null && smurfingRows.has(i))
+            {
+                //attach class to row in order to mark it
             } 
             row.appendChild(td);
         }
@@ -115,9 +124,9 @@ function getSingleTransactionMarks(transaction) {
 
     var markedCells = new Set();
 
-    if(document.getElementById("signalWordCheck").checked)
+    if(document.getElementById("signalWordCheck").checked) //check if signal words should be filtered
     {
-        foreach(word in signalWordList)
+        foreach(word in signalWordList) //see if purpose of transaction has any signal words
         {
             if(transaction.purpose.includes(word))
             {
@@ -128,11 +137,11 @@ function getSingleTransactionMarks(transaction) {
 
     }
 
-    if(document.getElementById("corruptionIndexCheck").checked)
+    if(document.getElementById("corruptionIndexCheck").checked)//check if corruption index should be filtered
     {
-        var transactionCountry = transaction.iban.substring(0,2);
+        var transactionCountry = transaction.iban.substring(0,2); //get country code from iban
         var corruptionIndex = "";
-        foreach(country in corruptionIndexList)
+        foreach(country in corruptionIndexList) //look for corruption index matching given country code
         {
             if(country.countryCode == transactionCountry)
             {
@@ -147,9 +156,71 @@ function getSingleTransactionMarks(transaction) {
     return markedCells;
 }
 
-function detectSmurfing()
+function SmurfingAnalysis(data) //returns a Set of Row Numbers to mark because of smurfing
 {
+    var index = 1; //Set First Row Number
+    var eligibleTransactions = new Set([]);
+    var indexesToMark = new Set();
 
+    foreach(transaction in data) //Get Transactions with amounts that are valid for analysis
+    {
+        if(transaction.amount >= inp_minBetrag)
+        {
+            eligibleTransactions.add([index, transaction.amount])
+        }
+        index++;
+    }
+
+    foreach(suspect in eligibleTransactions) //check for each valid transaction
+    {
+        var checkedSuspect = SmurfingCheck(suspect, eligibleTransactions);
+
+        if(checkedSuspect != null) 
+        {
+            foreach(smurphIndex in checkedSuspect)
+            {
+                if(!indexesToMark.has(smurphIndex)) indexesToMark.add(smurphIndex); //if row isn't already in set add it
+            }
+        }
+    }
+    return indexesToMark;
+}
+
+function SmurfingCheck(check, allTransactions) //Check Smurfing Parameters for one suspect
+{
+    var smurphIndexes = new Set();
+    var occurences = 0; //number of similar transactions
+    foreach(elAmount in allTransactions)
+    {
+        if(check[0] != elAmount[0]) //don't count suspect transaction
+        {
+            if(VarianceCheck(check[1], elAmount[1]))
+            {
+                smurphIndexes.add(elAmount[0]) //add every row number that matches with suspect by parameters
+                occurences++;
+            }
+        }
+    }
+
+    if(occurences >= inp_minAnzahl) //check if minimum amount of similar transactions has been met
+    {
+        smurphIndexes.add(check[0]); //add index of suspect itself
+        return smurphIndexes;
+    }
+    else
+    {
+        return null; //return null to signal that no smurfing has been detected
+    }
+}
+
+function VarianceCheck(amount, checkSum) //analyse similarities based on given variance and amount
+{
+    lowestAmount = amount - (amount*(inp_varianz/100));
+    highestAmount = amount + (amount*(inp_varianz/100));
+
+    if(checkSum >= lowestAmount && checkSum<= highestAmount) return true;
+
+    return false;
 }
 
 
