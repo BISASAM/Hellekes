@@ -46,7 +46,7 @@ function fill_table(data) {
                          <td>TBD</td>`
 
         // fill cells
-        cells_to_mark = get_attr_to_mark(transaction);
+        cells_to_mark = getSingleTransactionMarks(transaction);
         for (attr in transaction) { 
             let td = document.createElement('td');
             td.classList.add(attr);  //needed to hide/unhide column
@@ -145,6 +145,11 @@ function getSingleTransactionMarks(transaction) {
     }
 
     return markedCells;
+}
+
+function detectSmurfing()
+{
+
 }
 
 
