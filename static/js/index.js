@@ -9,6 +9,9 @@ const inp_varianz = document.getElementById("varianz");
 const inp_minKorrIdx = document.getElementById("minKorrIdx");
 var jsonData;
 
+const corruptionIndexList = new Set("Please fill");
+const signalWordList = new Set("Please fill");
+
 
 document.onload = initialze();
 
@@ -106,11 +109,42 @@ function toggleCol(event) {
 
 }
 
-function get_attr_to_mark(transaction) {
+function getSingleTransactionMarks(transaction) {
     "This function takes a transaction as input, applies filter and returns a set, that defines which table cells to mark"
     "output example: {iban, purpose, amount}"
 
-    return new Set([]);
+    var markedCells = new Set();
+
+    if(document.getElementById("signalWordCheck").checked)
+    {
+        foreach(word in signalWordList)
+        {
+            if(transaction.purpose.includes(word))
+            {
+                markedCells.add("purpose");
+                break;
+            }
+        }
+
+    }
+
+    if(document.getElementById("corruptionIndexCheck").checked)
+    {
+        var transactionCountry = transaction.iban.substring(0,2);
+        var corruptionIndex = "";
+        foreach(country in corruptionIndexList)
+        {
+            if(country.countryCode == transactionCountry)
+            {
+                corruptionIndex = country.corruptionIndex;
+                break;
+            }
+        }
+
+        if(corruptionIndex >= inp_minKorrIdx) markedCells.add("iban");
+    }
+
+    return markedCells;
 }
 
 
