@@ -55,7 +55,7 @@
       "recipientIban": "DE67891011121314151617",
       "recipientBic": "BICBICB3BIC",
       "recipientName": "EmpfaengerBankkontoInhaberBezeichnung3",
-      "purpose": "HinterlegterVerwendungszweck3",
+      "purpose": "waschen",
       "accountHolder": "SenderBankkontoInhaberBezeichnung3",
       "accountSystem": "SenderBankkontoSystemBezeichnung3",
       "accountType": "SenderBankkontoTypbezeichnung3",

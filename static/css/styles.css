@@ -51,6 +51,17 @@ summary {
   background-color: rgb(180, 180, 180) !important;
 }
 
+.mark_purpose {
+  background-color: rgb(192, 100, 100) !important;
+  color: white;
+}
+
+.mark_iban {
+  background-color: rgb(192, 100, 100) !important;
+  color: white;
+}
+
+
 /* Fixed table header when scrolling*/  
 .tableFixHead          { overflow-y: auto; height: 100px; }
 .tableFixHead thead th { position: sticky; top: 0; }

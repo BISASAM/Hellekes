@@ -7,10 +7,13 @@ const inp_minBetrag = document.getElementById("minBetrag");
 const inp_minAnzahl = document.getElementById("minAnzahl");
 const inp_varianz = document.getElementById("varianz");
 const inp_minKorrIdx = document.getElementById("minKorrIdx");
+const signalWordCheck = document.getElementById("signalWordCheck");
+const corruptionIndexCheck = document.getElementById("corruptionIndexCheck");
 var jsonData;
 
-const corruptionIndexList = new Set("Please fill");
-const signalWordList = new Set("Please fill");
+var markMap = {"purpose": "mark_purpose", "iban": "mark_iban"}  // defines what classes to add to table cell, if suspicious attr is found
+const signalWordList = new Set(["Geldwäsche", "waschen"]);  // liste einlesen hier
+const corruptionIndexList = new Set("Please fill");  // sollte obj sein: {land1: index1, land2: index2}, auch einlesen
 var smurfingRows = null;
 
 
@@ -18,6 +21,8 @@ document.onload = initialze();
 
 function initialze() {
     goBtn.addEventListener("click", on_go_btn);
+    signalWordCheck.addEventListener('change', () => { fill_table(jsonData) });
+    corruptionIndexCheck.addEventListener('change', () => { fill_table(jsonData) });
 }
 
 
@@ -57,7 +62,7 @@ function fill_table(data) {
             td.classList.add(attr);  //needed to hide/unhide column
             td.innerHTML = transaction[attr];
             if (cells_to_mark.has(attr)) {
-                // attach class to row in order to mark it
+                td.classList.add(markMap[attr]);
             }
             if(smurfingRows != null && smurfingRows.has(i))
             {
@@ -108,14 +113,11 @@ function fill_col_select(header) {
 
 function toggleCol(event) {
     // hide/unhide column 
-    console.log(event.target.name);
     event.target.classList.toggle("pressed");
     let elements_to_hide = document.getElementsByClassName(event.target.name);
     for (const element of elements_to_hide) {
         element.classList.toggle("hidden");
     }
-    console.log(elements_to_hide);
-
 }
 
 function getSingleTransactionMarks(transaction) {
@@ -124,9 +126,9 @@ function getSingleTransactionMarks(transaction) {
 
     var markedCells = new Set();
 
-    if(document.getElementById("signalWordCheck").checked) //check if signal words should be filtered
+    if(signalWordCheck.checked) //check if signal words should be filtered
     {
-        foreach(word in signalWordList) //see if purpose of transaction has any signal words
+        for (let word of signalWordList) //see if purpose of transaction has any signal words
         {
             if(transaction.purpose.includes(word))
             {
@@ -137,11 +139,11 @@ function getSingleTransactionMarks(transaction) {
 
     }
 
-    if(document.getElementById("corruptionIndexCheck").checked)//check if corruption index should be filtered
+    if(corruptionIndexCheck.checked)//check if corruption index should be filtered
     {
         var transactionCountry = transaction.iban.substring(0,2); //get country code from iban
         var corruptionIndex = "";
-        foreach(country in corruptionIndexList) //look for corruption index matching given country code
+        for (let country of corruptionIndexList) //look for corruption index matching given country code
         {
             if(country.countryCode == transactionCountry)
             {
