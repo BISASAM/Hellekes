@@ -164,24 +164,24 @@ function SmurfingAnalysis(data) //returns a Set of Row Numbers to mark because o
     var eligibleTransactions = new Set([]);
     var indexesToMark = new Set();
 
-    foreach(transaction in data) //Get Transactions with amounts that are valid for analysis
+    for(let transaction of data) //Get Transactions with amounts that are valid for analysis
     {
-        if(transaction.amount >= inp_minBetrag)
+        if(transaction.amount <= inp_minBetrag)
         {
             eligibleTransactions.add([index, transaction.amount])
         }
         index++;
     }
 
-    foreach(suspect in eligibleTransactions) //check for each valid transaction
+    for(let suspect of eligibleTransactions) //check for each valid transaction
     {
         var checkedSuspect = SmurfingCheck(suspect, eligibleTransactions);
 
         if(checkedSuspect != null) 
         {
-            foreach(smurphIndex in checkedSuspect)
+            for(let smurphIndex of checkedSuspect)
             {
-                if(!indexesToMark.has(smurphIndex)) indexesToMark.add(smurphIndex); //if row isn't already in set add it
+                indexesToMark.add(smurphIndex); //add row to set
             }
         }
     }
@@ -192,7 +192,7 @@ function SmurfingCheck(check, allTransactions) //Check Smurfing Parameters for o
 {
     var smurphIndexes = new Set();
     var occurences = 0; //number of similar transactions
-    foreach(elAmount in allTransactions)
+    for(let elAmount of allTransactions)
     {
         if(check[0] != elAmount[0]) //don't count suspect transaction
         {
