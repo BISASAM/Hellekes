@@ -10,12 +10,11 @@ const inp_minKorrIdx = document.getElementById("minKorrIdx");
 const signalWordCheck = document.getElementById("signalWordCheck");
 const corruptionIndexCheck = document.getElementById("corruptionIndexCheck");
 var jsonData;
+var cpi_scores;
 
 var markMap = {"purpose": "mark_purpose", "iban": "mark_iban"}  // defines what classes to add to table cell, if suspicious attr is found
 const signalWordList = new Set(["Geldwäsche", "waschen"]);  // liste einlesen hier
-const corruptionIndexList = new Set("Please fill");  // sollte obj sein: {land1: index1, land2: index2}, auch einlesen
 var smurfingRows = null;
-
 
 document.onload = initialze();
 
@@ -23,6 +22,17 @@ function initialze() {
     goBtn.addEventListener("click", on_go_btn);
     signalWordCheck.addEventListener('change', () => { fill_table(jsonData) });
     corruptionIndexCheck.addEventListener('change', () => { fill_table(jsonData) });
+    cpi_scores = get_cpi_scores();
+}
+
+function get_cpi_scores() {
+    fetch("/get_cpi_scores").then(response => {
+        if (response.ok) {
+            response.json().then(data => cpi_scores = data);
+        } else {
+            console.log('Problem with api: ' + response.status);
+        }
+    });
 }
 
 
@@ -141,20 +151,10 @@ function getSingleTransactionMarks(transaction) {
 
     if(corruptionIndexCheck.checked)//check if corruption index should be filtered
     {
-        var transactionCountry = transaction.iban.substring(0,2); //get country code from iban
-        var corruptionIndex = "";
-        for (let country of corruptionIndexList) //look for corruption index matching given country code
-        {
-            if(country.countryCode == transactionCountry)
-            {
-                corruptionIndex = country.corruptionIndex;
-                break;
-            }
-        }
-
+        let transactionCountry = transaction.iban.substring(0,2); //get country code from iban
+        let corruptionIndex = cpi_scores[transactionCountry]["cpi_score"]
         if(corruptionIndex >= inp_minKorrIdx) markedCells.add("iban");
     }
-
     return markedCells;
 }
 
