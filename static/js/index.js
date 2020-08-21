@@ -153,7 +153,7 @@ function getSingleTransactionMarks(transaction) {
     {
         let transactionCountry = transaction.iban.substring(0,2); //get country code from iban
         let corruptionIndex = cpi_scores[transactionCountry]["cpi_score"]
-        if(corruptionIndex >= inp_minKorrIdx) markedCells.add("iban");
+        if(corruptionIndex <= inp_minKorrIdx.value) markedCells.add("iban");
     }
     return markedCells;
 }
