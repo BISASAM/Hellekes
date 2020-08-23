@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -10,7 +11,6 @@ body {
   background-color: rgba(255, 255, 255);
   max-width: 1440px;
   min-height: 100%;
-  
 }
 
 #Filterbox {
@@ -27,13 +27,20 @@ body {
 
 #contextMenu {
   position: absolute;
-  display:none;
+  display: none;
 }
 
 #contextMenu a:hover {
   background: rgb(180, 219, 251);
 }
 
+#resultTableCorr tr:hover {
+  background: rgb(180, 219, 251);
+}
+
+#resultTableCorr {
+  width: 40rem;
+}
 
 .table td {
   vertical-align: middle !important;
@@ -70,21 +77,39 @@ summary {
   color: white;
 }
 
-
-/* Fixed table header when scrolling*/  
-.tableFixHead          { overflow-y: auto; height: 100px; }
-.tableFixHead thead th { position: sticky; top: 0; }
+/* Fixed table header when scrolling*/
+.tableFixHead {
+  overflow-y: auto;
+  height: 100px;
+}
+.tableFixHead thead th {
+  position: sticky;
+  top: 0;
+}
 
 /* Just common table stuff. Really. */
-table  { border-collapse: collapse; width: 100%;}
-th, td { padding: 8px 16px; margin: 3px; }
-th     { background:#eee;}
-tr {text-align: center;}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  padding: 8px 16px;
+  margin: 3px;
+}
+th {
+  background: #eee;
+}
+tr {
+  text-align: center;
+}
 
 #input_div {
   padding: 10px;
 }
-#input_div label {display: block;}
+#input_div label {
+  display: block;
+}
 #input_div #fileSelection {
   padding: 10px 0px;
   font-weight: bold;

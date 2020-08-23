@@ -38,14 +38,12 @@ def change_cpi_score():
         data = json.load(f)
 
     data[cc]['cpi_score'] = score
-    
+
     with open('data/cpi_scores.json', "w") as f:
         json.dump(data, f)
 
     return make_response('Ok', 200)
 
 
-
 if __name__ == '__main__':
     app.run()
-    

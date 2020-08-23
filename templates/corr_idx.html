@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  
-    <link rel="shortcut icon" type="image/x-icon" href="../static/images/money_small.png">
-  
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../static/lib_fw/bootstrap.min.css" />
-    <link rel="stylesheet" href="../static/css/styles.css" />
-  
-    <!--catch vars passed to render_template and make available for js -->
-  
-    <title>Geldwäsche Erkennungstool</title>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="../static/images/money_small.png">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../static/lib_fw/bootstrap.min.css" />
+  <link rel="stylesheet" href="../static/css/styles.css" />
+
+  <!--catch vars passed to render_template and make available for js -->
+
+  <title>Geldwäsche Erkennungstool</title>
 
 </head>
 
@@ -24,9 +24,9 @@
     <div id="resultBox" class="container">
       <h3 id="tableCaption">Korruptionsindex - Länderliste</h3>
       <br>
-      <span style="font-size: 0.9rem;">(Rechtsklick auf Zeile öffnet Menu zum Bearbeiten/Löschen)</span>
-        
-      <table id="resultTable" class="table tableFixHead" style="width: 40rem">
+      <span style="font-size: 0.9rem;">(Rechtsklick auf Zeile öffnet Menu zum Bearbeiten)</span>
+
+      <table id="resultTableCorr" class="table tableFixHead">
         <thead>
           <tr>
             <th scope="col" style="max-width: 6rem;">#</th>
@@ -45,7 +45,6 @@
     <div id="contextMenu" class="dropdown clearfix">
       <div class="list-group" style="display: block; position: static; border-radius: 10px;">
         <a href="#" id="editBtn" class="list-group-item list-group-item-action">Bearbeiten</a>
-        <a href="#" id="delBtn" class="list-group-item list-group-item-action">Löschen</a>
         <a href="#" id="cancelBtn" class="list-group-item list-group-item-action">Abbrechen</a>
       </div>
     </div>
