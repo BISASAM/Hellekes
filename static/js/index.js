@@ -77,6 +77,7 @@ function fill_table(data) {
     smurfingRows = SmurfingAnalysis(data);
   }
   for (const transaction of data) {
+    var suspicious = false;
     let row = document.createElement("tr");
     row.innerHTML = `<th scope="row">${i++}</th>
                          <td>TBD</td>`;
@@ -89,13 +90,19 @@ function fill_table(data) {
       td.innerHTML = transaction[attr];
       if (cells_to_mark.has(attr)) {
         td.classList.add(markMap[attr]);
+        suspicious = true;
       }
-      if (smurfingRows != null && smurfingRows.has(i)) {
-        //attach class to row in order to mark it
+      if (smurfingRows != null && smurfingRows.has(i) && attr == "amount") {
+        td.classList.add("mark_transactionAmount");
+        suspicious = true;
       }
       row.appendChild(td);
-    }
 
+      if(suspicious)
+      {
+        //Change suspicious column to Yes/No TODO!!!
+      }
+    }
     body.appendChild(row);
   }
 
@@ -182,14 +189,14 @@ function getSingleTransactionMarks(transaction) {
     //check if corruption index should be filtered
     let transactionCountry = transaction.iban.substring(0, 2); //get country code from iban
     let corruptionIndex = cpi_scores[transactionCountry]["cpi_score"];
-    if (corruptionIndex <= inp_minKorrIdx.value) markedCells.add("iban");
+    if (corruptionIndex <= parseInt(inp_minKorrIdx.value)) markedCells.add("iban");
   }
   return markedCells;
 }
 
 function SmurfingAnalysis(data) {
   //returns a Set of Row Numbers to mark because of smurfing
-  var index = 1; //Set First Row Number
+  var index = 2; //Set First Row Number
   var eligibleTransactions = new Set([]);
   var indexesToMark = new Set();
 
@@ -209,8 +216,6 @@ function SmurfingAnalysis(data) {
       }
     }
   }
-
-  console.log(indexesToMark);
   return indexesToMark;
 }
 

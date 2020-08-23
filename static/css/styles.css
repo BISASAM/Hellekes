@@ -77,6 +77,11 @@ summary {
   color: white;
 }
 
+.mark_transactionAmount {
+  background-color: rgb(192, 100, 100) !important;
+  color: white;
+}
+
 /* Fixed table header when scrolling*/
 .tableFixHead {
   overflow-y: auto;
