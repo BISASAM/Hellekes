@@ -25,6 +25,15 @@ body {
   background-color: #f8f9fa;
 }
 
+#contextMenu {
+  position: absolute;
+  display:none;
+}
+
+#contextMenu a:hover {
+  background: rgb(180, 219, 251);
+}
+
 
 .table td {
   vertical-align: middle !important;
