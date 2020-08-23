@@ -7,19 +7,23 @@ const inp_minBetrag = document.getElementById("minBetrag");
 const inp_minAnzahl = document.getElementById("minAnzahl");
 const inp_varianz = document.getElementById("varianz");
 const inp_minKorrIdx = document.getElementById("minKorrIdx");
+const smurfingAnalysisCheck = document.getElementById("smurphingCheck");
 const signalWordCheck = document.getElementById("signalWordCheck");
 const corruptionIndexCheck = document.getElementById("corruptionIndexCheck");
 var jsonData;
 var cpi_scores;
+var signalWordList;
 
 var markMap = { purpose: "mark_purpose", iban: "mark_iban" }; // defines what classes to add to table cell, if suspicious attr is found
-const signalWordList = new Set(["Geldwäsche", "waschen"]); // liste einlesen hier
 var smurfingRows = null;
 
 document.onload = initialze();
 
 function initialze() {
   goBtn.addEventListener("click", on_go_btn);
+  smurfingAnalysisCheck.addEventListener("change", () => {
+    fill_table(jsonData);
+  });
   signalWordCheck.addEventListener("change", () => {
     fill_table(jsonData);
   });
@@ -27,12 +31,23 @@ function initialze() {
     fill_table(jsonData);
   });
   cpi_scores = get_cpi_scores();
+  signalWordList = get_signal_words();
 }
 
 function get_cpi_scores() {
   fetch("/get_cpi_scores").then((response) => {
     if (response.ok) {
       response.json().then((data) => (cpi_scores = data));
+    } else {
+      console.log("Problem with api: " + response.status);
+    }
+  });
+}
+
+function get_signal_words() {
+  fetch("/get_signal_words").then((response) => {
+    if (response.ok) {
+      response.json().then((data) => (signalWordList = data));
     } else {
       console.log("Problem with api: " + response.status);
     }
@@ -58,7 +73,7 @@ function fill_table(data) {
   // create table body
   let body = document.createElement("tbody");
   i = 1;
-  if (document.getElementById("smurphingCheck").checked) {
+  if (smurfingAnalysisCheck.checked) {
     smurfingRows = SmurfingAnalysis(data);
   }
   for (const transaction of data) {
@@ -86,6 +101,25 @@ function fill_table(data) {
 
   resultTable.appendChild(header);
   resultTable.appendChild(body);
+
+  SyncSelectedColumns();
+}
+
+function SyncSelectedColumns()
+{
+  let selColButtons = colSelectDiv.getElementsByTagName("button");
+  for( var i = 0; i < selColButtons.length; i++)
+  {
+    if(selColButtons[i].classList.contains("pressed"))
+    {
+      var column = document.getElementsByClassName(selColButtons[i].id);
+
+      for(var j = 0; j < column.length; j++)
+      {
+        column[j].classList.add("hidden");
+      }
+    }
+  }
 }
 
 async function on_go_btn() {
@@ -112,6 +146,7 @@ function fill_col_select(header) {
     btn.type = "button";
     btn.name = attr;
     btn.innerHTML = attr;
+    btn.id = attr;
     btn.classList.add("col_select");
     btn.addEventListener("click", toggleCol);
     colSelectDiv.appendChild(btn);
@@ -159,8 +194,8 @@ function SmurfingAnalysis(data) {
   var indexesToMark = new Set();
 
   for (let transaction of data) { //Get Transactions with amounts that are valid for analysis
-    if (transaction.amount <= inp_minBetrag) {
-      eligibleTransactions.add([index, transaction.amount]);
+    if (Math.round(transaction.amount) <= parseInt(inp_minBetrag.value)) {
+      eligibleTransactions.add([index, Math.round(transaction.amount)]);
     }
     index++;
   }
@@ -174,6 +209,8 @@ function SmurfingAnalysis(data) {
       }
     }
   }
+
+  console.log(indexesToMark);
   return indexesToMark;
 }
 
@@ -191,7 +228,7 @@ function SmurfingCheck(check, allTransactions) {
     }
   }
 
-  if (occurences >= inp_minAnzahl) {
+  if (occurences >= parseInt(inp_minAnzahl.value)) {
     //check if minimum amount of similar transactions has been met
     smurphIndexes.add(check[0]); //add index of suspect itself
     return smurphIndexes;
@@ -202,8 +239,8 @@ function SmurfingCheck(check, allTransactions) {
 
 function VarianceCheck(amount, checkSum) {
   //analyse similarities based on given variance and amount
-  lowestAmount = amount - amount * (inp_varianz / 100);
-  highestAmount = amount + amount * (inp_varianz / 100);
+  lowestAmount = amount - amount * (parseInt(inp_varianz.value) / 100);
+  highestAmount = amount + amount * (parseInt(inp_varianz.value) / 100);
 
   if (checkSum >= lowestAmount && checkSum <= highestAmount) return true;
 
