@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -11,7 +12,6 @@ body {
   background-color: rgba(255, 255, 255);
   max-width: 1440px;
   min-height: 100%;
-  
 }
 
 #filter_heading {
@@ -35,6 +35,22 @@ body {
   margin-left: 145px;
 }
 
+#contextMenu {
+  position: absolute;
+  display: none;
+}
+
+#contextMenu a:hover {
+  background: rgb(180, 219, 251);
+}
+
+#resultTableCorr tr:hover {
+  background: rgb(180, 219, 251);
+}
+
+#resultTableCorr {
+  width: 40rem;
+}
 
 .table td {
   vertical-align: middle !important;
@@ -72,16 +88,37 @@ summary {
   color: white;
 }
 
+.mark_transactionAmount {
+  background-color: rgb(192, 100, 100) !important;
+  color: white;
+}
 
-/* Fixed table header when scrolling*/  
-.tableFixHead          { overflow-y: auto; height: 100px; }
-.tableFixHead thead th { position: sticky; top: 0; }
+/* Fixed table header when scrolling*/
+.tableFixHead {
+  overflow-y: auto;
+  height: 100px;
+}
+.tableFixHead thead th {
+  position: sticky;
+  top: 0;
+}
 
 /* Just common table stuff. Really. */
-table  { border-collapse: collapse; width: 100%;}
-th, td { padding: 8px 16px; margin: 3px; }
-th     { background:#eee;}
-tr {text-align: center;}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  padding: 8px 16px;
+  margin: 3px;
+}
+th {
+  background: #eee;
+}
+tr {
+  text-align: center;
+}
 
 #header-container {
   text-align: center;
