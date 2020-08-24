@@ -77,8 +77,8 @@ def read_json():
         data = json.load(f)
         entry_list = data["transfers"]
     return jsonify(entry_list)
-
-
+  
+  
 @app.route('/change_cpi_score', methods=['GET'])
 def change_cpi_score():
     cc = request.args.get("cc")
@@ -116,7 +116,5 @@ def write_signal_words(data):
 
 
    
-
-
 if __name__ == '__main__':
     app.run()

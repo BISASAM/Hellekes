@@ -5,12 +5,19 @@ body {
 
 body {
   background-color: rgb(186, 186, 186);
+  font-size: 20px;
 }
 
 #white-content-wrapper {
   background-color: rgba(255, 255, 255);
   max-width: 1440px;
   min-height: 100%;
+}
+
+#filter_heading {
+  margin-top: 20px;
+  margin-bottom: 24px;
+  margin-left: 145px;
 }
 
 #Filterbox {
@@ -21,8 +28,11 @@ body {
 }
 
 #Resultbox {
-  padding: 2rem 0rem;
-  background-color: #f8f9fa;
+  padding: 0.8rem 0rem;
+}
+
+#resultHeading {
+  margin-left: 145px;
 }
 
 #contextMenu {
@@ -49,6 +59,7 @@ body {
 
 #col_select {
   margin: 1rem;
+  margin-top: -15px;
 }
 
 button.col_select {
@@ -109,15 +120,67 @@ tr {
   text-align: center;
 }
 
+#header-container {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  max-width: 1440px;
+}
+
+#spacing {
+  padding-right: 20px;
+  width: 150px;
+}
+
+#header {
+  margin: auto;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+#logo {
+  position: relative;
+  padding-right: 25px;
+  width: 150px;
+}
+
 #input_div {
   padding: 10px;
 }
+
+#input_div h2 {
+  margin-top: 20px;
+  margin-bottom: -25px;
+}
+
 #input_div label {
+  padding-top: 50px;
+  padding-bottom: 10px;
   display: block;
 }
+
 #input_div #fileSelection {
-  padding: 10px 0px;
   font-weight: bold;
+}
+
+#shown_columns {
+  margin-left: 22px;
+}
+
+footer {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-width: 1440px;
+  font-size: 20px;
+}
+
+.hidden_info {
+  font-size: 18px;
 }
 
 .hidden {
