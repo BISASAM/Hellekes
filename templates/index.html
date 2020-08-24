@@ -15,27 +15,35 @@
   <!--catch vars passed to render_template and make available for js -->
 
   <title>Geldwäsche Erkennungstool</title>
+
 </head>
 
 <body>
+  <div class="row" id="header-container">
+    <div class="cel" id="spacing"></div>
+    <h1 id="header">Das Geldwäsche Erkennungstool</h1>
+    <img src="../static/images/logo.png" id="logo">
+  </div>
 
-  <div id="white-content-wrapper" class="container">
+  <div id="white-content-wrapper" class="container rounded">
 
     <div id="input_div" class="container">
-      <label>Please enter the JSON file:</label>
+      <h2>Datei Eingabe</h2>
+      <label>Wählen Sie eine JSON-Datei aus:</label>
       <div id="fileSelection">
         <input type="file" id="fileInput" name="fileInput" accept=".txt, .json">
         <button type="button" class="btn btn-primary" id="goBtn">GO</button>
       </div>
     </div>
 
-    <div id="Filterbox" class="container">
+    <h2 id="filter_heading">Filter Auswahl</h2>
+    <div id="Filterbox" class="container rounded">
       <div>
         <details>
           <summary>
             Smurphing <input type="checkbox" name="smurphing" value="bla" id="smurphingCheck">
           </summary>
-          <div style="margin-left: 1.3rem;">
+          <div class="hidden_info" style="margin-left: 1.8rem;">
             <label for="minBetrag">min. Betrag:</label>
             <input type="text" id="minBetrag" name="minBetrag">
 
@@ -53,7 +61,7 @@
           <summary>
             Signalwörter <input type="checkbox" name="signalwoerter" value="bla" id="signalWordCheck">
           </summary>
-          <div style="margin-left: 1.3rem;">
+          <div class="hidden_info" style="margin-left: 1.8rem;">
             <button type="button">Liste der Signalwörter bearbeiten</button>
           </div>
         </details>
@@ -64,7 +72,7 @@
           <summary>
             Korruptionsindex <input type="checkbox" name="korruptionsindex" value="bla" id="corruptionIndexCheck">
           </summary>
-          <div style="margin-left: 1.3rem;">
+          <div class="hidden_info" style="margin-left: 1.8rem;">
             <label for="minKorrIdx">max. Korruptionsindex</label>
             <input type="text" id="minKorrIdx" name="minKorrIdx"> <br><br>
             <button type="button">Länderliste mit Korruptionsindex bearbeiten</button>
@@ -75,7 +83,9 @@
 
     <hr>
 
+    <h2 id="resultHeading"></h2>
     <div id="Resultbox" class="container">
+      <label id="resultText"></label>
       <div class="row" id="col_select">
         <!-- gets filled with selectable column names -->
       </div>
@@ -105,5 +115,8 @@
   <script src="../static/js/index.js"></script>
 
 </body>
+<footer>
+  <label>Die Pythons: Vincenzo di Renzo / Tobias Weigel / Mika Busch / Ali Torun / Tom Krebs</label>
+</footer>
 
 </html>

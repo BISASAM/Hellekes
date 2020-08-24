@@ -1,7 +1,10 @@
 const goBtn = document.getElementById("goBtn");
 const resultTable = document.getElementById("resultTable");
 const fileInput = document.getElementById("fileInput");
+const resultText = document.getElementById("resultText");
 const colSelectDiv = document.getElementById("col_select");
+const resultBox = document.getElementById("Resultbox");
+const resultHeading = document.getElementById("resultHeading");
 
 const inp_minBetrag = document.getElementById("minBetrag");
 const inp_minAnzahl = document.getElementById("minAnzahl");
@@ -107,6 +110,11 @@ async function on_go_btn() {
 function fill_col_select(header) {
     // This function creates the section above the results table, 
     // that contains all the togglable columns 
+
+    resultBox.style.backgroundColor = "#f8f9fa";
+
+    resultHeading.innerHTML = "Ausgabe";
+    resultText.innerHTML = "<label id='shown_columns'>Ein- / Ausblenden von Spalten:</label><br />";
 
     colSelectDiv.innerHTML = "";  // clear first
     for (attr in header) {

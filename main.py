@@ -7,11 +7,13 @@ app = Flask(__name__)
 def root():
     return render_template("index.html")
 
+
 @app.route('/get_cpi_scores')
 def read_cpi_json():
     with open('data/cpi_scores.json') as f:
         data = json.load(f)
     return jsonify(data)
+
 
 @app.route('/get_data')
 def read_json():
@@ -21,7 +23,5 @@ def read_json():
     return jsonify(entry_list)
 
 
-
 if __name__ == '__main__':
     app.run()
-    
