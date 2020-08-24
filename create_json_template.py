@@ -49,7 +49,10 @@ def create_transfer():
     accounts_without_sender.remove(sender)
     receiver = random.choice(accounts_without_sender)
     ammount = str(random.choice(ammounts)) + "0"
-    purpose = "Purpose_" + create_random_str(6, True, True, True)
+    if random.random() >= 0.5:
+        purpose = "Purpose_" + create_random_str(6, True, True, True)
+    else:
+        purpose = random.choice(purposes)
 
     return transfer(date, ammount, sender, receiver, purpose)
 
@@ -83,29 +86,32 @@ def manual_transfer(createdDate, organizationId, recipientIban, recipientBic,
                     ):
     transfer = {
         "createdDate": createdDate,
-        "lastModifiedDate": lastModifiedDate,
-        "lockVersion": lockVersion,
-        "organizationId": organizationId,
-        "bankTransferReportItemId": bankTransferReportItemId,
-        "bankTransferId": bankTransferId,
-        "financialAccountId": financialAccountId,
-        "amount": amount,
-        "bankTransferDate": bankTransferDate,
-        "recipientIban": recipientIban,
-        "recipientBic": recipientBic,
-        "recipientName": recipientName,
-        "purpose": purpose,
         "accountHolder": accountHolder,
+        "iban": iban,
+        "recipientName": recipientName,
+        "recipientIban": recipientIban,
+        "amount": amount,
+        "purpose": purpose,
+        "bankName": bankName,
+        "bic": bic,
+        "lastModifiedDate": lastModifiedDate,
+        "recipientBic": recipientBic,
         "accountSystem": accountSystem,
         "accountType": accountType,
-        "bankName": bankName,
-        "iban": iban,
-        "bic": bic
+        "bankTransferDate": bankTransferDate,
+        "bankTransferId": bankTransferId,
+        "financialAccountId": financialAccountId,
+        "organizationId": organizationId,
+        "bankTransferReportItemId": bankTransferReportItemId,
+        "lockVersion": lockVersion
     }
     return transfer
 
 if __name__ == "__main__":
-    ammounts = [y*x for x in [10**i for i in range(8)] for y in [1.0,1.5,2.0,2.5,5.0,7.5]] 
+    ammounts = [y*x for x in [10**i for i in range(8)] for y in [1.0,1.5,2.0,2.5,5.0,7.5]]
+    with open("data/signal_words.json", 'r') as signal_words: 
+        purposes = json.loads(signal_words.read())
+
 
     banken =  [
         {"name":"Deutsche Bank", "bic":"DEUTDEDBBER", "country":"DE", "id":"vknrwgth-txzd-8cx7-smhponep31tq"},
@@ -124,8 +130,10 @@ if __name__ == "__main__":
 
     data = {"transfers": []}
 
-    for i in range(1000):
+    entries = 1000
+
+    for i in range(entries):
         data["transfers"].append(create_transfer())
 
-    with open("json_template_2.json", 'w') as outfile:
+    with open(f"json_template_{entries}.json", 'w') as outfile:
         json.dump(data, outfile, indent=4)
