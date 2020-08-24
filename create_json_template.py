@@ -104,27 +104,28 @@ def manual_transfer(createdDate, organizationId, recipientIban, recipientBic,
     }
     return transfer
 
-ammounts = [y*x for x in [10**i for i in range(8)] for y in [1.0,1.5,2.0,2.5,5.0,7.5]] 
+if __name__ == "__main__":
+    ammounts = [y*x for x in [10**i for i in range(8)] for y in [1.0,1.5,2.0,2.5,5.0,7.5]] 
 
-banken =  [
-    {"name":"Deutsche Bank", "bic":"DEUTDEDBBER", "country":"DE", "id":"vknrwgth-txzd-8cx7-smhponep31tq"},
-    {"name":"Postbank", "bic":"PBNKDEFFXXX", "country":"DE", "id":"vx25ju6w-3z07-djqk-nq1ng5gn8fxe"},
-    {"name":"Volksbank Breisgau Nord eG", "bic":"GENODE61EMM", "country":"DE", "id":"4t786zkg-khmn-7g6x-sb80vqku65b0"},
-    {"name":"Sparkasse Freiburg", "bic":"FRSPDE66XXX", "country":"DE", "id":"9lyjxydg-845c-suas-y6x1h6w15vyv"},
-    {"name":"COMMERZBANK AG", "bic":"COBADEBBXXX", "country":"DE", "id":"u6jebj5g-mfei-9n8w-bfgaw7aed40v"}, 
-    {"name":"Banca Comercială Română S.A.", "bic":"RNCBROBUXXX", "country":"RO", "id":"hrrjfpum-55cv-9wmt-yxvdho7fqqb0"}
-]
+    banken =  [
+        {"name":"Deutsche Bank", "bic":"DEUTDEDBBER", "country":"DE", "id":"vknrwgth-txzd-8cx7-smhponep31tq"},
+        {"name":"Postbank", "bic":"PBNKDEFFXXX", "country":"DE", "id":"vx25ju6w-3z07-djqk-nq1ng5gn8fxe"},
+        {"name":"Volksbank Breisgau Nord eG", "bic":"GENODE61EMM", "country":"DE", "id":"4t786zkg-khmn-7g6x-sb80vqku65b0"},
+        {"name":"Sparkasse Freiburg", "bic":"FRSPDE66XXX", "country":"DE", "id":"9lyjxydg-845c-suas-y6x1h6w15vyv"},
+        {"name":"COMMERZBANK AG", "bic":"COBADEBBXXX", "country":"DE", "id":"u6jebj5g-mfei-9n8w-bfgaw7aed40v"}, 
+        {"name":"Banca Comercială Română S.A.", "bic":"RNCBROBUXXX", "country":"RO", "id":"hrrjfpum-55cv-9wmt-yxvdho7fqqb0"}
+    ]
 
-accounts = []
-tiere = ["Affen", "Loewen", "Tiger", "Esel", "Pferde", "Hai"]
-accounts.extend([create_account((t + " Company"), random.choice(banken)) for t in tiere])
-namen = ["Tom Mueller", "Max Musterman", "Tina Schmitt", "Gerda Schneider"]
-accounts.extend([create_account(n, random.choice(banken)) for n in namen])
+    accounts = []
+    tiere = ["Affen", "Loewen", "Tiger", "Esel", "Pferde", "Hai"]
+    accounts.extend([create_account((t + " Company"), random.choice(banken)) for t in tiere])
+    namen = ["Tom Mueller", "Max Musterman", "Tina Schmitt", "Gerda Schneider"]
+    accounts.extend([create_account(n, random.choice(banken)) for n in namen])
 
-data = {"transfers": []}
+    data = {"transfers": []}
 
-for i in range(1000):
-    data["transfers"].append(create_transfer())
+    for i in range(1000):
+        data["transfers"].append(create_transfer())
 
-with open("json_template_2.json", 'w') as outfile:
-    json.dump(data, outfile, indent=4)
+    with open("json_template_2.json", 'w') as outfile:
+        json.dump(data, outfile, indent=4)
