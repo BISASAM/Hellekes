@@ -111,3 +111,7 @@ async function onSaveBtn() {
   }
   $("#editModal").modal("hide");
 }
+
+function goBack() {
+  window.history.back();
+}
