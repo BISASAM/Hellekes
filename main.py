@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, make_response, request
 import json
+import excel_exporter as excel_exporter
 app = Flask(__name__)
 
 
@@ -93,6 +94,14 @@ def change_cpi_score():
     with open('data/cpi_scores.json', "w") as f:
         json.dump(data, f)
 
+    return make_response('Ok', 200)
+
+
+@app.route('/export_to_excel', methods = ['POST'])
+def export_to_excel():
+    jsdata = request.get_data(as_text=True)
+    #print(jsdata)
+    excel_exporter.parse_html_table(jsdata)
     return make_response('Ok', 200)
 
 

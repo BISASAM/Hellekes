@@ -54,6 +54,13 @@ function get_signal_words() {
   });
 }
 
+function export_to_excel() {
+    const http = new XMLHttpRequest();
+    http.open("POST", '/export_to_excel', true);
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    http.send(resultTable.innerHTML);
+}
+
 function fill_table(data) {
   resultTable.innerHTML = ""; // clear table
 
