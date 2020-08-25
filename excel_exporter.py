@@ -51,8 +51,17 @@ class HTMLTableParser(HTMLParser):
 
 def write_to_sheet(header, table):
     workbook = xlsxwriter.Workbook('test_export.xlsx')
+    
+    #Formats
     date_format = workbook.add_format()
     date_format.set_num_format(22)
+    currency_format = workbook.add_format()
+    currency_format.set_num_format(8)
+    mark_iban_format = workbook.add_format()
+    mark_iban_format.set_bg_color("#C06464")
+    mark_purpose_format = workbook.add_format()
+    mark_purpose_format.set_bg_color("#C06464")
+    
     worksheet = workbook.add_worksheet()
     for c, column_data in enumerate(header):
         worksheet.write(0, c, column_data[0])
@@ -60,11 +69,20 @@ def write_to_sheet(header, table):
         for c, entry in enumerate(row_list):
             cell_type = ""
             print(entry)
+            classes = entry[1].get("class", [])
             if "timestamp" in entry[1]:
                 timestamp = int(entry[1]["timestamp"])
                 worksheet.write_datetime(r, c, datetime.fromtimestamp(timestamp), date_format)
-            elif "lockVersion" in entry[1].get("class", []):
-                worksheet.write_number(r, c, int(entry[0]))             
+            elif "scope" in entry[1]:
+                worksheet.write_number(r, c, int(entry[0]))
+            elif "amount" in classes:
+                worksheet.write(r, c, float(entry[0]), currency_format)
+            elif "lockVersion" in classes:
+                worksheet.write_number(r, c, int(entry[0]))
+            elif "mark_purpose" in classes:
+                worksheet.write(r, c, entry[0], mark_purpose_format)
+            elif "mark_iban" in classes:
+                worksheet.write(r, c, entry[0], mark_iban_format)
             else:
                 worksheet.write(r, c, entry[0])            
     workbook.close()
