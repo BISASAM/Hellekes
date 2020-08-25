@@ -90,7 +90,12 @@ function fill_table(data) {
     for (attr in transaction) {
       let td = document.createElement("td");
       td.classList.add(attr); //needed to hide/unhide column
-      td.innerHTML = transaction[attr];
+      if (attr.includes("Date")) {
+        td.setAttribute("timestamp", moment(transaction[attr]).format("X"))
+        td.innerHTML = moment(transaction[attr]).locale("de").format('lll');
+      } else {
+        td.innerHTML = transaction[attr];
+      }
       if (cells_to_mark.has(attr)) {
         td.classList.add(markMap[attr]);
         suspicious = true;
