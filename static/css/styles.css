@@ -165,6 +165,12 @@ tr {
   font-weight: bold;
 }
 
+#smurphingCheck, #signalWordCheck, #corruptionIndexCheck {
+  float: right;
+  margin-right: 75%;
+  margin-top: 12px;
+}
+
 #shown_columns {
   margin-left: 22px;
 }
@@ -183,8 +189,20 @@ footer {
   font-size: 18px;
 }
 
+#sig_button {
+  margin-top: 5px;  
+}
+
+#cor_button {
+  margin-top: -40px;
+}
+
 .hidden {
   display: none;
+}
+
+#tableCaption {
+  padding-top: 20px;
 }
 
 /* Borders (if you need them)  

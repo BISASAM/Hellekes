@@ -19,10 +19,16 @@
 </head>
 
 <body>
-  <div id="white-content-wrapper" class="container">
+  <div class="row" id="header-container">
+    <div class="cel" id="spacing"></div>
+    <h1 id="header">Das Geldwäsche Erkennungstool</h1>
+    <img src="../static/images/logo.png" id="logo">
+  </div>
+
+  <div id="white-content-wrapper" class="container rounded" style="padding: 10px;">
 
     <div id="resultBox" class="container">
-      <h3 id="tableCaption">Korruptionsindex - Länderliste</h3>
+      <h2 id="tableCaption">Korruptionsindex - Länderliste</h2>
       <br>
       <button onclick="goBack()">Zurück</button>
       <br>
@@ -89,5 +95,8 @@
   <script src="../static/lib_fw/moment-with-locales.min.js"></script>
   <script src="../static/js/corr_idx.js"></script>
 </body>
+<footer>
+  <label>Die Pythons: Vincenzo di Renzo / Tobias Weigel / Mika Busch / Ali Torun / Tom Krebs</label>
+</footer>
 
 </html>
