@@ -89,9 +89,11 @@ function fill_table(data) {
   for (const transaction of data) {
     var suspicious = false;
     let row = document.createElement("tr");
-    row.innerHTML = `<th scope="row">${i++}</th>
-                         <td>TBD</td>`;
-
+    row.innerHTML = `<th scope="row">${i}</th>`;
+    let suspiciousTd = document.createElement("td");
+    suspiciousTd.id = "suspicious" + i;
+    row.appendChild(suspiciousTd);
+    
     // fill cells
     cells_to_mark = getSingleTransactionMarks(transaction);
     for (attr in transaction) {
@@ -115,9 +117,18 @@ function fill_table(data) {
 
       if(suspicious)
       {
-        //Change suspicious column to Yes/No TODO!!!
+        suspiciousTd.innerText = "X";
+        if(suspiciousTd.classList.contains("mark_Unsuspicious")) suspiciousTd.classList.remove("mark_Unsuspicious");
+        suspiciousTd.classList.add("mark_Suspicious");
+      }
+      else
+      {
+        suspiciousTd.innerText = '\u2714';
+        if(suspiciousTd.classList.contains("mark_Suspicious")) suspiciousTd.classList.remove("mark_Suspicious");
+        suspiciousTd.classList.add("mark_Unsuspicious");
       }
     }
+    i++;
     body.appendChild(row);
   }
 

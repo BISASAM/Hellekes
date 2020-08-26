@@ -93,6 +93,16 @@ summary {
   color: white;
 }
 
+.mark_Suspicious {
+  background-color: rgb(192, 100, 100) !important;
+  color: white;
+}
+
+.mark_Unsuspicious {
+  background-color: rgb(2, 165, 70) !important;
+  color: white;
+}
+
 /* Fixed table header when scrolling*/
 .tableFixHead {
   overflow-y: auto;
