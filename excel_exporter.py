@@ -51,6 +51,21 @@ class HTMLTableParser(HTMLParser):
             self._in_body = False
 
 
+def get_visible_rows(row_setting):
+    rows = []
+    try:
+        for x in row_setting.split(","):
+            if "-" in x:
+                y = x.split("-")
+                start = int(y[0])
+                stop = int(y[1])
+                rows.extend(range(start, stop+1))
+            else:
+                rows.append(int(x))
+    except ValueError:
+        print(f"{x} cant be converted to a number")
+    return rows
+            
 def encrypt_file(input_file, output_file, password):
     bit_version = platform.architecture()[0]
     if bit_version == "64bit":
@@ -63,26 +78,36 @@ def encrypt_file(input_file, output_file, password):
     return os.system(f'{msoffice_crypt} -e -p "{password}" {input_file} {output_file}')
         
 
+
 def write_to_sheet(header, table, settings):
     password_mode = "password" in settings and len(settings["password"]) > 0
     filename = "temp.xlsx" if password_mode else 'export.xlsx'
+    header_names = [{"header": h[0]} for h in header]
+    workbook = xlsxwriter.Workbook(filename)
+
     #Formats
     date_format = workbook.add_format()
     date_format.set_num_format(22)
     currency_format = workbook.add_format()
     currency_format.set_num_format(8)
+    mark_currency_format = workbook.add_format()
+    mark_currency_format.set_num_format(8)
+    mark_currency_format.set_bg_color("#C06464")
     mark_iban_format = workbook.add_format()
     mark_iban_format.set_bg_color("#C06464")
     mark_purpose_format = workbook.add_format()
     mark_purpose_format.set_bg_color("#C06464")
+    mark_suspicious_format = workbook.add_format()
+    mark_suspicious_format.set_bg_color("#C06464")
+    mark_unsuspicious_format = workbook.add_format()
+    mark_unsuspicious_format.set_bg_color("#02A546")
     
     worksheet = workbook.add_worksheet()
-    for c, column_data in enumerate(header):
-        worksheet.write(0, c, column_data[0])
+    column_widths = [len(h[0]) for h in header]
     for r, row_list in enumerate(table, start=1):
         for c, entry in enumerate(row_list):
-            cell_type = ""
-            print(entry)
+            if len(entry[0]) > column_widths[c]:
+                column_widths[c] = len(entry[0])
             classes = entry[1].get("class", [])
             if "timestamp" in entry[1]:
                 timestamp = int(entry[1]["timestamp"])
@@ -90,15 +115,33 @@ def write_to_sheet(header, table, settings):
             elif "scope" in entry[1]:
                 worksheet.write_number(r, c, int(entry[0]))
             elif "amount" in classes:
-                worksheet.write(r, c, float(entry[0]), currency_format)
+                if "mark_transactionAmount" in classes:
+                    worksheet.write(r, c, float(entry[0]), mark_currency_format)
+                else:    
+                    worksheet.write(r, c, float(entry[0]), currency_format)
+                if (len(entry[0]) + 2) > column_widths[c]:
+                    column_widths[c] = (len(entry[0]) + 2)
+            elif "mark_Unsuspicious" in classes:
+                worksheet.write(r, c, entry[0], mark_unsuspicious_format)
+            elif "mark_Suspicious" in classes:
+                worksheet.write(r, c, entry[0], mark_suspicious_format)
             elif "lockVersion" in classes:
                 worksheet.write_number(r, c, int(entry[0]))
-            elif "mark_purpose" in classes:
+            elif settings["filter"] and "mark_purpose" in classes:
                 worksheet.write(r, c, entry[0], mark_purpose_format)
-            elif "mark_iban" in classes:
+            elif settings["filter"] and "mark_iban" in classes:
                 worksheet.write(r, c, entry[0], mark_iban_format)
             else:
-                worksheet.write(r, c, entry[0])            
+                worksheet.write(r, c, entry[0])
+    worksheet.add_table(0,0,r,c,{'header_row': True, 'columns':header_names})
+      
+    for i, h in enumerate(header):
+            width = column_widths[i] + int(column_widths[i]*0.18)
+            classes = h[1].get("class", [])
+            if settings["hide_columns"] and "hidden" in classes:
+                worksheet.set_column(i, i, width, None, {'hidden': True}) 
+            else:
+                worksheet.set_column(i,i,width)
     workbook.close()
 
     if password_mode:
@@ -108,7 +151,13 @@ def write_to_sheet(header, table, settings):
             print("Error encrypting file")
             raise Exception
 
+def create_export(jsonData):
+    header, table = parse_html_table(jsonData["table"])
+    del jsonData["table"]
+    print(jsonData)
+    write_to_sheet(header, table, jsonData)
+    
 def parse_html_table(htmlText):
     p = HTMLTableParser()
     p.feed(htmlText)
-    write_to_sheet(p.header, p.table)
+    return (p.header, p.table)
