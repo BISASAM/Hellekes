@@ -27,10 +27,22 @@ function initialze() {
   smurfingAnalysisCheck.addEventListener("change", () => {
     fill_table(jsonData);
   });
+  inp_minBetrag.addEventListener("change", () => {
+    fill_table(jsonData);
+  });
+  inp_minAnzahl.addEventListener("change", () => {
+    fill_table(jsonData);
+  });
+  inp_varianz.addEventListener("change", () => {
+    fill_table(jsonData);
+  });
   signalWordCheck.addEventListener("change", () => {
     fill_table(jsonData);
   });
   corruptionIndexCheck.addEventListener("change", () => {
+    fill_table(jsonData);
+  });
+  inp_minKorrIdx.addEventListener("change", () => {
     fill_table(jsonData);
   });
   cpi_scores = get_cpi_scores();
@@ -227,7 +239,7 @@ function getSingleTransactionMarks(transaction) {
 
 function SmurfingAnalysis(data) {
   //returns a Set of Row Numbers to mark because of smurfing
-  var index = 2; //Set First Row Number
+  var index = 1; //Set First Row Number
   var eligibleTransactions = new Set([]);
   var indexesToMark = new Set();
 
