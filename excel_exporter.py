@@ -2,6 +2,8 @@ import xlsxwriter
 from html.parser import HTMLParser
 from datetime import datetime
 import locale
+import os
+import platform
 
 class HTMLTableParser(HTMLParser):
     def __init__(self):
@@ -49,9 +51,21 @@ class HTMLTableParser(HTMLParser):
             self._in_body = False
 
 
-def write_to_sheet(header, table):
-    workbook = xlsxwriter.Workbook('test_export.xlsx')
-    
+def encrypt_file(input_file, output_file, password):
+    bit_version = platform.architecture()[0]
+    if bit_version == "64bit":
+        msoffice_crypt = "msoffice-crypt\msoffice-crypt-64.exe"
+    elif bit_version == "32bit":
+        msoffice_crypt = "msoffice-crypt\msoffice-crypt-32.exe"
+    else:
+        print(f"Unsupported Platform: {bit_version}")
+        return -1
+    return os.system(f'{msoffice_crypt} -e -p "{password}" {input_file} {output_file}')
+        
+
+def write_to_sheet(header, table, settings):
+    password_mode = "password" in settings and len(settings["password"]) > 0
+    filename = "temp.xlsx" if password_mode else 'export.xlsx'
     #Formats
     date_format = workbook.add_format()
     date_format.set_num_format(22)
@@ -87,6 +101,12 @@ def write_to_sheet(header, table):
                 worksheet.write(r, c, entry[0])            
     workbook.close()
 
+    if password_mode:
+        if encrypt_file(filename, "export.xlsx", settings["password"]) == 0:
+            os.remove(filename)
+        else:
+            print("Error encrypting file")
+            raise Exception
 
 def parse_html_table(htmlText):
     p = HTMLTableParser()
