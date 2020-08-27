@@ -26,16 +26,20 @@
   </div>
 
   <div id="white-content-wrapper" class="container rounded">
-
-    <div id="input_div" class="container">
-      <h2>Datei Eingabe</h2>
-      <label>Wählen Sie eine JSON-Datei aus:</label>
-      <div id="fileSelection">
-        <input type="file" id="fileInput" name="fileInput" accept=".txt, .json">
-        <button type="button" class="btn btn-primary" id="goBtn">GO</button>
+    <div id="file_div" class="container">
+      <div id="input_div" class="container">
+        <h2>Datei Eingabe</h2>
+        <label>Wählen Sie eine JSON-Datei aus:</label>
+        <div id="fileSelection">
+          <input type="file" id="fileInput" name="fileInput" accept=".txt, .json">
+          <button type="button" class="btn btn-primary" id="goBtn">GO</button>
+        </div>
+      </div>
+      <div id="export_div" class="container hidden">
+        <h2>Export to Excel</h2>
+        <button type="button" class="btn btn-secondary" id="exportBtn">Export</button>
       </div>
     </div>
-
     <h2 id="filter_heading">Filter Auswahl</h2>
     <div id="Filterbox" class="container rounded">
       <div>

@@ -1,10 +1,12 @@
 const goBtn = document.getElementById("goBtn");
+const exportBtn = document.getElementById("exportBtn");
 const resultTable = document.getElementById("resultTable");
 const fileInput = document.getElementById("fileInput");
 const resultText = document.getElementById("resultText");
 const colSelectDiv = document.getElementById("col_select");
 const resultBox = document.getElementById("Resultbox");
 const resultHeading = document.getElementById("resultHeading");
+const export_div = document.getElementById("export_div");
 
 const inp_minBetrag = document.getElementById("minBetrag");
 const inp_minAnzahl = document.getElementById("minAnzahl");
@@ -23,7 +25,9 @@ var smurfingRows = null;
 document.onload = initialze();
 
 function initialze() {
+  sessionStorage.removeItem("resultTable");
   goBtn.addEventListener("click", on_go_btn);
+  exportBtn.addEventListener("click", on_export_btn);
   smurfingAnalysisCheck.addEventListener("change", () => {
     fill_table(jsonData);
   });
@@ -57,11 +61,11 @@ function get_signal_words() {
   });
 }
 
-function export_to_excel() {
-    const http = new XMLHttpRequest();
-    http.open("POST", '/export_to_excel', true);
-    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    http.send(resultTable.innerHTML);
+function on_export_btn() {
+  if (!resultTable.classList.contains("hidden")) {
+    sessionStorage.setItem("resultTable", resultTable.innerHTML)
+    window.location.href = "/excel_export";
+  }
 }
 
 function fill_table(data) {
@@ -117,7 +121,7 @@ function fill_table(data) {
 
       if(suspicious)
       {
-        suspiciousTd.innerText = "X";
+        suspiciousTd.innerText = '\u2717';
         if(suspiciousTd.classList.contains("mark_Unsuspicious")) suspiciousTd.classList.remove("mark_Unsuspicious");
         suspiciousTd.classList.add("mark_Suspicious");
       }
@@ -165,6 +169,7 @@ async function on_go_btn() {
     fill_col_select(jsonData[0]);
     fill_table(jsonData);
     resultTable.classList.remove("hidden");
+    export_div.classList.remove("hidden");
   };
   reader.readAsText(file);
 }
