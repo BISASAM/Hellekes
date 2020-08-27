@@ -20,11 +20,20 @@ body {
   margin-left: 145px;
 }
 
-#Filterbox {
+#Filterbox, #Settingsbox {
   border-style: double;
   margin-bottom: 0rem;
   background-color: antiquewhite;
   padding: 2rem;
+}
+
+#settings_heading {
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+
+#Settingsbox details{
+  padding-bottom: 5px;
 }
 
 #Resultbox {
@@ -158,6 +167,8 @@ tr {
 
 #input_div {
   padding: 10px;
+  width: 60%;
+  float:left;
 }
 
 #input_div h2 {
@@ -175,9 +186,45 @@ tr {
   font-weight: bold;
 }
 
+#export_div {
+  padding: 10px;
+  float:right;
+  overflow: hidden;
+}
+
+#export_div h2 {
+  margin-top: 20px;
+}
+
+#exportBtn {
+  margin-top: 10px;
+}
+
+#file_div {
+  overflow: hidden;
+}
+
+#button_div{
+  padding-top: 20px;
+}
+
+#create_export {
+  float: left;
+}
+
+#download_export {
+  float: right;
+}
+
 #smurphingCheck, #signalWordCheck, #corruptionIndexCheck {
   float: right;
   margin-right: 75%;
+  margin-top: 12px;
+}
+
+#password_check, #limit_lines, #include_filter, #include_hidden {
+  float: right;
+  margin-right: 70%;
   margin-top: 12px;
 }
 
