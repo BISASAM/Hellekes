@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, make_response, request
+from flask import Flask, render_template, jsonify, make_response, request, send_file
 import json
 import excel_exporter as excel_exporter
 app = Flask(__name__)
@@ -96,13 +96,22 @@ def change_cpi_score():
 
     return make_response('Ok', 200)
 
+@app.route('/excel_export')
+def excel_export():
+    return render_template("excel_export.html")
+
+@app.route('/return-excel/')
+def return_excel_file():
+    try:
+	    return send_file('export.xlsx', attachment_filename='export.xlsx')
+    except Exception as e:
+        return str(e)
 
 @app.route('/export_to_excel', methods = ['POST'])
 def export_to_excel():
-    jsdata = request.get_data(as_text=True)
-    #print(jsdata)
-    excel_exporter.parse_html_table(jsdata)
-    return make_response('Ok', 200)
+    jsonData = request.get_json()
+    excel_exporter.create_export(jsonData)
+    return make_response('Ok', 200)    
 
 
 def get_signal_words():
