@@ -250,7 +250,7 @@ function SmurfingAnalysis(data) {
 
   for (let transaction of data) { //Get Transactions with amounts that are valid for analysis
     if (Math.round(transaction.amount) <= parseInt(inp_minBetrag.value)) {
-      eligibleTransactions.add([index, Math.round(transaction.amount), transaction.iban]);
+      eligibleTransactions.add([index, Math.round(transaction.amount), transaction.recipientIban]);
     }
     index++;
   }
