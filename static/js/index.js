@@ -250,7 +250,7 @@ function SmurfingAnalysis(data) {
 
   for (let transaction of data) { //Get Transactions with amounts that are valid for analysis
     if (Math.round(transaction.amount) <= parseInt(inp_minBetrag.value)) {
-      eligibleTransactions.add([index, Math.round(transaction.amount)]);
+      eligibleTransactions.add([index, Math.round(transaction.amount), transaction.iban]);
     }
     index++;
   }
@@ -272,18 +272,14 @@ function SmurfingCheck(check, allTransactions) {
   var smurphIndexes = new Set();
   var occurences = 0; //number of similar transactions
   for (let elAmount of allTransactions) {
-    if (check[0] != elAmount[0]) {
       //don't count suspect transaction
-      if (VarianceCheck(check[1], elAmount[1])) {
+      if (VarianceCheck(check[1], elAmount[1])&&check[2] == elAmount[2]) {
         smurphIndexes.add(elAmount[0]); //add every row number that matches with suspect by parameters
         occurences++;
       }
-    }
   }
-
   if (occurences >= parseInt(inp_minAnzahl.value)) {
     //check if minimum amount of similar transactions has been met
-    smurphIndexes.add(check[0]); //add index of suspect itself
     return smurphIndexes;
   } else {
     return null; //return null to signal that no smurfing has been detected
