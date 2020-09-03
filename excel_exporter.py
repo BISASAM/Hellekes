@@ -154,7 +154,7 @@ def write_to_sheet(header, table, settings):
 def create_export(jsonData):
     header, table = parse_html_table(jsonData["table"])
     del jsonData["table"]
-    print(jsonData)
+    #print(jsonData)
     write_to_sheet(header, table, jsonData)
     
 def parse_html_table(htmlText):
